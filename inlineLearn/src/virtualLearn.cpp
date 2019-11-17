@@ -18,65 +18,73 @@
 
 #include <iostream>
 
-class Base {
-public:
+class Base
+{
+  public:
 	// Needs to be called for existing object. Hence cannot be static
-	virtual void getMyself() {
-		std::cout << "BASE\n";
+	virtual void getMyself()
+	{
+		std::cout << "This is Base\n";
 	}
-	void printName() {
+	void printName()
+	{
 		std::cout << "Non virtual Base\n";
 	}
 	virtual ~Base() {}
 
-private:
+  private:
 };
 
 class Derived : public Base
 {
-public:
-	void getMyself() {
-		std::cout << "Derived\n";
-	}
+  public:
 	// Overrides of virtual functions are always virtual
-	void printName() {
+	void getMyself()
+	{
+		std::cout << "This is Derived\n";
+	}
+	void printName()
+	{
 		std::cout << "Non virtual Derived\n";
 	}
-private:
+
+  private:
 };
 
 class AnotherDerived : public Derived
 {
-public:
-	void getMyself() {
+  public:
+	void getMyself()
+	{
 		std::cout << "Second Derived\n";
 	}
 
-private:
+  private:
 };
-int main() {
-	std::cout << "!!!Hello World!!!" << std::endl; // prints !!!Hello World!!!
+int main()
+{
+	std::cout << "!!!Hello World!!!\n"; // prints !!!Hello World!!!
 
-	//	Base b;
-	//	Derived d;
-	//	b.getMyself();
-	//	d.getMyself();
+	// Base bL;
+	// Derived dL;
+	// bL.getMyself();
+	// dL.getMyself();
 
 	Base *b = new Base;
-	Base *d = new Derived;
-	Derived *d2 = new AnotherDerived;
+	Derived *d = new Derived;
+	// Derived *d2 = new AnotherDerived;
 
-	// getMyself() is virtual. Call resolved based on the object type
+	// // getMyself() is virtual. Call resolved based on the object type
 	b->getMyself();
 	d->getMyself();
-	d2->getMyself();
+	// d2->getMyself();
 
-	// printName() is non-virtual. Call resolved based on the pointer type
-	d->printName();
-	d->printName();
-	d2->printName();
+	// // printName() is non-virtual. Call resolved based on the pointer type
+	// d->printName();
+	// d->printName();
+	// d2->printName();
 
-	// Use of scope resolution to suppress the virtual call mechanism
-	d2->Base::getMyself();
+	// // Use of scope resolution to suppress the virtual call mechanism
+	// d2->Base::getMyself();
 	return 0;
 }
