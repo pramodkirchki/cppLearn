@@ -8,3 +8,4 @@ Release/
 *.exe
 */.gitignore
 */perf*
+*.exe
