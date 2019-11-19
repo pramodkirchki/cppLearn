@@ -23,6 +23,6 @@ int main(int argc, char const* argv[])
   CALL_WITH_MAX(++a, 6); // Prints 8, because incremented twice
   a = 6;
   std::cout << "With inline => ";
-  callWithMax(++a, 6);
+  callWithMax(++a, 6);	// Prints 7 as expected
   return 0;
 }
