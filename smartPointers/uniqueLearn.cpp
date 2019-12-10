@@ -1,21 +1,26 @@
 #include <iostream>
 #include <vector>
+#include <typeinfo>
+
+constexpr uint32_t SIZE = 0xFFFFFFFE;
 
 class SomeClass
 {
   public:
-    SomeClass( uint32_t index, std::vector<int64_t> &Ints ):
-    m_index( index ),
+    SomeClass( std::vector<int64_t> &Ints ):
     vecInts( Ints )
     {}
-    void printName() { std::cout<< }
-    uint32_t getIndex() {return m_index;}
+    auto printName() { return typeid(*this).name(); }
   private:
-    uint32_t m_index{0};
     std::vector<int64_t> vecInts;
 };
 
 int main( int argc, char *argv[])
 {
+  std::cout << "Hello!";
+  std::vector<int64_t> myVec( SIZE, 10);
+  SomeClass myObject( myVec );
+
+  std::cout << "Size of the object " << myObject.printName() << " is : " << sizeof(myObject) ;
   return 0;
 }
