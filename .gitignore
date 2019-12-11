@@ -3,8 +3,10 @@
 .cproject
 .settings/
 Debug/
-*.out
 Release/
+*.out
+
+.vscode
 *.exe
 */.gitignore
 */perf*
