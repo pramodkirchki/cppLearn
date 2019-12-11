@@ -1,0 +1,1 @@
+https://www.modernescpp.com/index.php/c-core-guidelines-std-array-and-std-vector-are-your-friends
