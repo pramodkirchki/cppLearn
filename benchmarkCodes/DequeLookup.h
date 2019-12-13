@@ -19,6 +19,16 @@ inline std::deque<int>::iterator stdFindDeque( std::deque<int> &randNumbers, int
   return std::find( randNumbers.begin(), randNumbers.end(), value );
 }
 
+std::deque<int>::iterator myFind(std::deque<int> &myDeque, const int& value)
+{
+  for( auto it = myDeque.begin(); it != myDeque.end(); ++it)
+  {
+    if((*it) == value)
+      return it;
+  }
+  return myDeque.end();
+}
+
 std::deque<int> constructRandomDeque( int size )
 {
   std::deque<int> randNumbers;
@@ -57,13 +67,22 @@ class DequeFixture : public ::benchmark::Fixture {
   std::deque<int> m_randNumbers;
 };
 
-BENCHMARK_DEFINE_F(DequeFixture, findElement)(benchmark::State& state) {
+BENCHMARK_DEFINE_F(DequeFixture, stdFindElement)(benchmark::State& state) {
   const int size = static_cast<int>(state.range(0));
   int value = std::rand() % size;
   for (auto _ : state) {
     benchmark::DoNotOptimize( stdFindDeque( m_randNumbers, value ) );
   }
 }
+
+BENCHMARK_DEFINE_F(DequeFixture, myFindElement)(benchmark::State& state) {
+  const int size = static_cast<int>(state.range(0));
+  int value = std::rand() % size;
+  for (auto _ : state) {
+    benchmark::DoNotOptimize( myFind( m_randNumbers, value ) );
+  }
+}
 BENCHMARK_REGISTER_F(DequeFixture, findElement)->Range(1 << 3, 1 << 12);
+BENCHMARK_REGISTER_F(DequeFixture, myFindElement)->Range(1 << 3, 1 << 12);
 
 #endif /* DEQUELOOKUP_H */
