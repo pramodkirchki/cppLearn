@@ -82,7 +82,7 @@ BENCHMARK_DEFINE_F(DequeFixture, myFindElement)(benchmark::State& state) {
     benchmark::DoNotOptimize( myFind( m_randNumbers, value ) );
   }
 }
-BENCHMARK_REGISTER_F(DequeFixture, findElement)->Range(1 << 3, 1 << 12);
+BENCHMARK_REGISTER_F(DequeFixture, stdFindElement)->Range(1 << 3, 1 << 12);
 BENCHMARK_REGISTER_F(DequeFixture, myFindElement)->Range(1 << 3, 1 << 12);
 
 #endif /* DEQUELOOKUP_H */
