@@ -1,0 +1,2 @@
+g++ Bench_main.cpp -std=c++17 -isystem ../../benchmark/include -L ../../benchmark/build/src -lbenchmark -lpthread -o myBenchmark
+
