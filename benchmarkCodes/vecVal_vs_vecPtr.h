@@ -27,24 +27,16 @@ private:
   int m_arr[100];
 };
 
-bool compareByValue( LargeObject& a, LargeObject& b) {
-    return a.getID() < b.getID();
-}
-
-bool compareByPtr( LargeObject* a, LargeObject* b) {
-    return a->getID() < b->getID();
-}
-
 using vecLargeObjectVal = std::vector<LargeObject>;
-using vecLargeObjectPtr = std::vector<LargeObject*>;
+using vecLargeObjectPtr = std::vector<std::unique_ptr<LargeObject>>;
 inline void stdSortVectorVal( vecLargeObjectVal &randNumbers )
 {
-  std::sort( randNumbers.begin(), randNumbers.end(), compareByValue );
+  std::sort( randNumbers.begin(), randNumbers.end(), [](LargeObject& a, LargeObject& b) { return a.getID() < b.getID(); } );
 }
 
 inline void stdSortVectorPtr( vecLargeObjectPtr &randNumbers )
 {
-  std::sort( randNumbers.begin(), randNumbers.end(), compareByPtr );
+  std::sort( randNumbers.begin(), randNumbers.end(), [](const std::unique_ptr<LargeObject>& a, const std::unique_ptr<LargeObject>& b){ return a->getID() < b->getID(); } );
 }
 
 vecLargeObjectVal constructRandomContainerVal( int size )
@@ -62,7 +54,8 @@ vecLargeObjectPtr constructRandomContainerPtr( int size )
   vecLargeObjectPtr randNumbers;
   for (int i = 0; i < size; ++i)
   {
-	  randNumbers.push_back( new LargeObject( std::rand() % size ) );
+  	std::unique_ptr<LargeObject> ptr2LargeObject(new LargeObject( std::rand() % size ));
+	  randNumbers.push_back(std::move(ptr2LargeObject));
   }
   return randNumbers;
 }
@@ -75,22 +68,22 @@ class TestFixture : public ::benchmark::Fixture {
     m_randNumbersPtr = constructRandomContainerPtr( static_cast<int>(st.range(0)) );
   }
 
-  void TearDown(const ::benchmark::State&) { m_randNumbers.clear(); }
+  void TearDown(const ::benchmark::State&) {
+  	m_randNumbers.clear();
+  	m_randNumbersPtr.clear();
+  }
 
  vecLargeObjectVal m_randNumbers;
  vecLargeObjectPtr m_randNumbersPtr;
 };
 
 BENCHMARK_DEFINE_F(TestFixture, BM_stdSortVectorVal)(benchmark::State& state) {
-  const int size = static_cast<int>(state.range(0));
   for (auto _ : state) {
     stdSortVectorVal( m_randNumbers );
   }
 }
 
 BENCHMARK_DEFINE_F(TestFixture, BM_stdSortVectorPtr)(benchmark::State& state) {
-  const int size = static_cast<int>(state.range(0));
-  int value = std::rand() % size;
   for (auto _ : state) {
     stdSortVectorPtr( m_randNumbersPtr );
   }
