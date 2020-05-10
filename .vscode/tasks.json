@@ -34,6 +34,16 @@
       "problemMatcher": [
         "$gcc"
       ]
+    },
+    {
+      "label": "make_in_mane",
+      "command": "C:\\MinGW\\bin\\mingw32-make.exe",
+      "args": [
+        ""
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ]
     }    
   ]
 }
