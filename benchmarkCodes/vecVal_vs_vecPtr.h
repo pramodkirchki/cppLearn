@@ -8,6 +8,7 @@
  */
 
 #include <algorithm>
+#include <memory>
 #include <vector>
 #include <random>
 #include <benchmark/benchmark.h>

@@ -1,0 +1,1 @@
+Compile : c:\MinGW\bin\g++.exe -mavx2 av2_test.cpp

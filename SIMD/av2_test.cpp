@@ -7,7 +7,7 @@
 
 void printValues(std::ostream & os, int* val)
 {
-  for (int i = 0; i < 1; i+=8)
+  for (int i = 0; i < 8; i++)
   {
     os << std::hex << val[i] << " ";
   }
@@ -26,6 +26,12 @@ int main()
     {
       values[i] = _mm256_set1_epi32(i);
     }
+    std::cout << "Initial values : \n";
+    printValues(std::cout, (int*)&values[0]);
+    printValues(std::cout, (int*)&values[1]);
+    printValues(std::cout, (int*)&values[2]);
+    printValues(std::cout, (int*)&values[31]);
+    std::cout << "****************** : \n";
 
     // auto valinit = (int*)&values;
     // std::cout << "valinit : "; printValues(std::cout, valinit);
@@ -34,8 +40,11 @@ int main()
     uint32_t constN = 2;
 
         __m256i a = LOAD_SIMD_FX(copy_p_input); copy_p_input += constN;
+        // printValues(std::cout, (int*)&a);
         __m256i b = LOAD_SIMD_FX(copy_p_input); copy_p_input += constN;
+        // printValues(std::cout, (int*)&b);
         __m256i c = LOAD_SIMD_FX(copy_p_input); copy_p_input += constN;
+        // printValues(std::cout, (int*)&c);
         __m256i d = LOAD_SIMD_FX(copy_p_input); copy_p_input += constN;
         __m256i e = LOAD_SIMD_FX(copy_p_input); copy_p_input += constN;
         __m256i f = LOAD_SIMD_FX(copy_p_input); copy_p_input += constN;
@@ -49,7 +58,8 @@ int main()
         __m256i n = LOAD_SIMD_FX(copy_p_input); copy_p_input += constN;
         __m256i o = LOAD_SIMD_FX(copy_p_input); copy_p_input += constN;
         __m256i p = LOAD_SIMD_FX(copy_p_input); copy_p_input += constN;
-
+        printValues(std::cout, (int*)&p);
+        
         __m256i a_0_15_b_0_15   = _mm256_unpacklo_epi8(a, b);
         __m256i a_16_31_b_16_31 = _mm256_unpackhi_epi8(a, b);
         __m256i c_0_15_d_0_15   = _mm256_unpacklo_epi8(c, d);
