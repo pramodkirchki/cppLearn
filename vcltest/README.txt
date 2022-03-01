@@ -1,6 +1,7 @@
 Example to try vector class library
-
-* Compile command - g++ -mavx2 -mfma --std=c++17 main.cpp
+* Requiements - 
+* Cygwin installed and in PATH (c:\cygwin64\bin\)
+* Compile command - g++.exe -mavx2 -mfma --std=c++17 main.cpp
 
 * VCL requires user to do the following before including vectorclass.h -> Refer to vcl.h to understand the usage.
 * 1. #define MAX_VECTOR_SIZE 256
